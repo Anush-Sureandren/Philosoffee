@@ -9,7 +9,7 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'your-service-role-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Initialize Twilio Client
-const accountSid = process.env.TWILIO_ACCOUNT_SID || 'your-twilio-account-sid';
+const accountSid = process.env.TWILIO_ACCOUNT_SID || 'ACyour_twilio_account_sid';
 const authToken = process.env.TWILIO_AUTH_TOKEN || 'your-twilio-auth-token';
 const twilioClient = twilio(accountSid, authToken);
 
