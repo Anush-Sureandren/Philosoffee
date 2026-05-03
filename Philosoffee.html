@@ -42,43 +42,89 @@
     .header .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
     }
     .header .header-right span.tagline {
       font-size: 12px;
       font-weight: 500;
     }
-    .header .menu-icon {
-      font-size: 28px;
-      cursor: pointer;
-    }
+
     .main-container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
     }
-    .horizontal-scroll {
-      display: flex;
-      overflow-x: auto;
-      gap: 16px;
-      padding-bottom: 12px;
+    .slideshow-wrapper {
+      position: relative;
       margin-bottom: 24px;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none;  /* IE and Edge */
     }
-    .horizontal-scroll::-webkit-scrollbar {
-      display: none;
+    .slide-arrow {
+      background: #C1272D;
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: calc(50% - 6px);
+      transform: translateY(-50%);
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+    .slide-arrow:hover {
+      background: #a02025;
+    }
+    .prev-arrow {
+      left: -18px;
+    }
+    .next-arrow {
+      right: -18px;
+    }
+    @media (max-width: 600px) {
+      .slide-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+      }
+      .prev-arrow { left: -8px; }
+      .next-arrow { right: -8px; }
+    }
+    @media (max-width: 480px) {
+      .header .logo { font-size: 16px; }
+      .header .header-right span.tagline { font-size: 10px; }
+      .header-content { padding: 12px 15px; }
+      .main-container { padding: 15px; }
+      .red-card { 
+        padding: 16px; 
+        border-radius: 10px;
+      }
+      .red-card h2 { font-size: 18px; }
+      .scroll-card { height: 160px; }
+    }
+    .horizontal-scroll {
+      overflow: hidden;
+      width: 100%;
+      padding: 4px 0 16px 0;
+    }
+    .slider-track {
+      display: flex;
+      gap: 16px;
+      will-change: transform;
     }
     .scroll-card {
       position: relative;
-      min-width: 140px;
-      width: 140px;
+      flex-shrink: 0;
       height: 180px;
       border-radius: 16px;
       overflow: hidden;
-      flex-shrink: 0;
       background-color: #222;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
     }
     .scroll-card img {
       width: 100%;
@@ -169,8 +215,6 @@
     
     @media (min-width: 600px) {
       .scroll-card {
-        min-width: 160px;
-        width: 160px;
         height: 200px;
       }
       .scroll-card h3 {
@@ -192,82 +236,92 @@
       <div class="logo">PHILOSOFFEE</div>
       <div class="header-right">
         <span class="tagline">for the love of Coffee</span>
-        <span class="material-symbols-outlined menu-icon">menu</span>
       </div>
     </div>
   </header>
 
   <div class="main-container">
-    <section class="horizontal-scroll">
-      <div class="scroll-card">
+    <div class="slideshow-wrapper">
+      <button class="slide-arrow prev-arrow" aria-label="Previous slide">&#10094;</button>
+      <div class="horizontal-scroll">
+        <div class="slider-track" id="card-track">
+      <div class="scroll-card" onclick="document.getElementById('sec-philosophy').scrollIntoView({ behavior: 'smooth', block: 'center' })">
         <img src="./assets/images/img_hero_coffee.jpg" alt="Philosophy">
         <div class="card-content">
           <h3>Philosoffee's<br>Philosophy</h3>
           <div class="arrows">>>></div>
         </div>
       </div>
-      <div class="scroll-card">
+      <div class="scroll-card" onclick="document.getElementById('sec-bengaluru').scrollIntoView({ behavior: 'smooth', block: 'center' })">
         <img src="./assets/images/img_blr_2.webp" alt="Bengaluru">
         <div class="card-content">
           <h3>Philosoffee's<br>Bengaluru</h3>
           <div class="arrows">>>></div>
         </div>
       </div>
-      <div class="scroll-card">
+      <div class="scroll-card" onclick="document.getElementById('sec-irinjalakuda').scrollIntoView({ behavior: 'smooth', block: 'center' })">
         <img src="./assets/images/img_ker_3.webp" alt="Irinjalakuda">
         <div class="card-content">
           <h3>Philosoffee's<br>Irinjalakuda</h3>
           <div class="arrows">>>></div>
         </div>
       </div>
-      <div class="scroll-card">
+      <div class="scroll-card" onclick="document.getElementById('sec-workshop').scrollIntoView({ behavior: 'smooth', block: 'center' })">
         <img src="./assets/images/img_hero_coffee_machine.jpg" alt="Consult / Franchise">
         <div class="card-content">
           <h3>Consult /<br>Franchise</h3>
           <div class="arrows">>>></div>
         </div>
       </div>
-      <div class="scroll-card">
+      <div class="scroll-card" onclick="document.getElementById('sec-workshop').scrollIntoView({ behavior: 'smooth', block: 'center' })">
         <img src="./assets/images/img_artisan_coffee_setup.png" alt="Book a Workshop">
         <div class="card-content">
           <h3>Book a<br>Workshop</h3>
           <div class="arrows">>>></div>
         </div>
       </div>
-    </section>
+      </div>
+      </div>
+      <button class="slide-arrow next-arrow" aria-label="Next slide">&#10095;</button>
+    </div>
+
 
     <main class="content-cards">
-      <article class="red-card">
+      <article class="red-card" id="sec-philosophy">
         <h2>For the Love of Coffee</h2>
         <p>At Philosoffee, we don't just brew coffee: we honour the journey from the soil to the soul. Our beans are born in the high-altitude mists of Coorg, grown at 3,000 ft where the elevation shapes a denser, more complex flavour profile.</p>
         <p>Dedicated to the craft of the bean, we select only 100% Arabica, using a natural process to preserve the inherent sweetness and fruit-forward character of the cherry. Each harvest is small-batch roasted with precision, ensuring that the single-origin story of the Western Ghats is told in every pour. Whether you're seeking a moment of stillness or the perfect rhythm for your day, it all starts here - with a cup built on passion and precision.</p>
-        <p>Locate us : Thrissur | Bengaluru</p>
+        <p>Locate us : <a href="https://maps.app.goo.gl/RXWQPLFDWgCfy6w38" target="_blank" style="color: inherit; text-decoration: underline;">Thrissur</a> | <a href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank" style="color: inherit; text-decoration: underline;">Bengaluru</a></p>
       </article>
 
-      <article class="red-card">
+      <article class="red-card" id="sec-irinjalakuda">
         <h2>Founder of Speciality Coffee &<br>Open Club Coffee Culture in Irinjalakuda</h2>
         <p>Philosoffee in Irinjalakuda is the town's pioneer of specialty coffee, introducing a new standard of brewing to the local community. Designed as an open club with a sophisticated bistro setup, our space is a dedicated sanctuary for the craft of the bean.</p>
         <p>Our coffee-centric menu is built on a foundation of 100% Arabica beans, sourced from the high-altitude estates of Coorg. We celebrate the versatility of coffee through a range of brewing methods, from the ritual of Pour Over and Aeropress to the patience of our signature Cold Brew and precision-pulled Espresso-based classics.</p>
         <p>Steeped in an atmosphere of rock music and a curated library, Philosoffee offers an ambient escape where culture and caffeine collide. Whether you're here to discover a new roast or lose yourself in a book, we invite you to join the revolution.</p>
-        <p>Visit: Philosoffee.ijk | Locate : Cafe Philosoffee | Request a Reservation<br>Amenities: Bistro | library | free-wifi | plug points | washroom | music</p>
+        <p>Visit: Philosoffee.ijk | Locate : <a href="https://maps.app.goo.gl/yJaXsXGwY2EQrbfZA" target="_blank" style="color: inherit; text-decoration: underline;">Cafe Philosoffee</a> | <a href="https://wa.me/918903825632?text=Name%3A%0Amobile%20number%3A%0Aand%20number%20of%20persons%3A" target="_blank" style="color: inherit; text-decoration: underline;">Request a Reservation</a><br>Amenities: Bistro | library | free-wifi | plug points | washroom | music</p>
       </article>
 
-      <article class="red-card">
+      <article class="red-card" id="sec-bengaluru">
         <h2>An original Counter Cafe in Bengaluru</h2>
         <p>In the heart of the city, Philosoffee Bengaluru reimagines the coffee experience through our original counter café concept. Moving away from the rushed 'grab-and-go' culture, we've designed a compact, intimate space that invites you to slow down.</p>
         <p>This is a small café concept where the barrier between guest and craft is removed. With a layout centered around an order counter and cozy seating, it's a space built for connection - making it easy to communicate with your barista about the nuances of our 100% Arabica beans and the story behind each brew.</p>
         <p>There is no rush here. We invite you to sit, sip, and enjoy a time of stillness. Whether you are exploring our manual brews or a classic espresso, every cup is an invitation to pause and appreciate the art of specialty coffee.</p>
-        <p>Visit: Philosoffee.blr | Locate : Philosoffee | Request a Reservation<br>Amenities: Counter cafe | mini library | free-wifi | plug points | washroom | music</p>
+        <p>Visit: Philosoffee.blr | Locate : <a href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank" style="color: inherit; text-decoration: underline;">Philosoffee</a> | <a href="https://wa.me/919048374981?text=Name%3A%0Amobile%20number%3A%0Aand%20number%20of%20persons%3A" target="_blank" style="color: inherit; text-decoration: underline;">Request a Reservation</a><br>Amenities: Counter cafe | mini library | free-wifi | plug points | washroom | music</p>
       </article>
 
-      <article class="red-card">
+      <article class="red-card" id="sec-workshop">
         <h2>Schedule a Coffee Experience Workshop /<br>Coffee Consulting</h2>
         <p>Beyond our cafes, we offer comprehensive coffee consulting services for those who dream of starting their own cafe, building a unique coffee brand, or opening a Philosoffee branch. From selecting high-quality beans to establishing rigorous brewing standards and shaping your overall cafe concept, we provide guidance every step of the way.</p>
         <p>Our team is led by Manu Mohan, the founder of Philosoffee and a professional barista with deep expertise in brewing and bar management. With a strong focus on quality and consistency, we help you build a coffee space rooted in specialty standards.</p>
         <p>At the heart of everything we do is our motto, "Way More Coffee". We believe in sharing the true taste of unadulterated, single-origin 100% Arabica - simple, honest, and crafted with care.</p>
         <div class="actions">
-          <span class="material-symbols-outlined">call</span>
-          <span class="material-symbols-outlined">chat_bubble</span>
+          <a href="tel:+918903825632" style="color: inherit; text-decoration: none;">
+            <span class="material-symbols-outlined">call</span>
+          </a>
+          <a href="https://wa.me/918903825632?text=Name%3A%20%0AMobile%3A%20%0Aexpect%20a%20call%20back%20in%202%20hrs" target="_blank" style="color: inherit; text-decoration: none;">
+            <span class="material-symbols-outlined">chat_bubble</span>
+          </a>
         </div>
       </article>
     </main>
@@ -279,5 +333,86 @@
     </div>
   </footer>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('card-track');
+      const container = document.querySelector('.horizontal-scroll');
+      const prevBtn = document.querySelector('.prev-arrow');
+      const nextBtn = document.querySelector('.next-arrow');
+      const wrapper = document.querySelector('.slideshow-wrapper');
+      
+      if (track && container && prevBtn && nextBtn) {
+        const updateWidths = () => {
+          const gap = 16;
+          const visibleCards = window.innerWidth >= 600 ? 4 : 2;
+          const containerWidth = container.clientWidth;
+          const cardWidth = (containerWidth - (gap * (visibleCards - 1))) / visibleCards;
+          track.querySelectorAll('.scroll-card').forEach(c => c.style.width = `${cardWidth}px`);
+        };
+        
+        updateWidths();
+        window.addEventListener('resize', updateWidths);
+
+        let isAnimating = false;
+        
+        const getCardWidth = () => {
+          const card = track.querySelector('.scroll-card');
+          return card.offsetWidth + 16; // width + gap
+        };
+
+        const slideNext = () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          const amount = getCardWidth();
+          track.style.transition = 'transform 0.4s ease-in-out';
+          track.style.transform = `translateX(-${amount}px)`;
+          
+          track.addEventListener('transitionend', function onEnd() {
+            track.removeEventListener('transitionend', onEnd);
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0)';
+            track.appendChild(track.firstElementChild);
+            isAnimating = false;
+          });
+        };
+
+        const slidePrev = () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          const amount = getCardWidth();
+          
+          track.insertBefore(track.lastElementChild, track.firstElementChild);
+          track.style.transition = 'none';
+          track.style.transform = `translateX(-${amount}px)`;
+          
+          void track.offsetWidth; // force reflow
+          
+          track.style.transition = 'transform 0.4s ease-in-out';
+          track.style.transform = 'translateX(0)';
+          
+          track.addEventListener('transitionend', function onEnd() {
+            track.removeEventListener('transitionend', onEnd);
+            isAnimating = false;
+          });
+        };
+
+        nextBtn.addEventListener('click', slideNext);
+        prevBtn.addEventListener('click', slidePrev);
+
+        let autoplayInterval;
+        const startAutoplay = () => {
+          autoplayInterval = setInterval(slideNext, 5000);
+        };
+
+        startAutoplay();
+
+        // Pause on hover or touch
+        wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+        wrapper.addEventListener('mouseleave', startAutoplay);
+        wrapper.addEventListener('touchstart', () => clearInterval(autoplayInterval));
+        wrapper.addEventListener('touchend', startAutoplay);
+      }
+    });
+  </script>
 </body>
 </html>
