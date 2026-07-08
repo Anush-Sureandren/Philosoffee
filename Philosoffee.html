@@ -5,295 +5,658 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Philosoffee</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Pontano+Sans:wght@300..800&family=Righteous&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Pontano+Sans:wght@300..800&family=Righteous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  
   <style>
+    :root {
+      --color-bg: #801C21;
+      --color-bg-dark: #681518;
+      --color-card: #6D161A;
+      --color-card-dark: #5B1013;
+      --color-text-light: #FFFFFF;
+      --color-text-muted: rgba(255, 255, 255, 0.7);
+      --color-accent: #E5A8A9;
+      --color-border: rgba(255, 255, 255, 0.15);
+      
+      --font-sans: 'Inter', 'Pontano Sans', sans-serif;
+      --font-serif: 'Philosopher', serif;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    html,
-    body {
-      font-family: 'Pontano Sans', sans-serif;
-      background-color: #ffffff;
-      color: #333;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    html {
+      scroll-behavior: smooth;
     }
 
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text-light);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+
+    /* Selection */
+    ::selection {
+      background-color: var(--color-accent);
+      color: var(--color-bg-dark);
+    }
+
+    /* Layout Containers */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 100px 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .section:first-of-type {
+      border-top: none;
+    }
+
+    /* Section Labels */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Sticky Header */
     .header {
-      background-color: #C1272D;
-      color: #ffffff;
+      background-color: rgba(128, 28, 33, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: background-color 0.3s ease;
     }
 
     .header-content {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 20px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .header .logo {
+    .logo {
       font-family: 'Righteous', cursive;
-      font-size: 22px;
+      font-size: 24px;
+      color: var(--color-text-light);
+      text-decoration: none;
       letter-spacing: 0.5px;
     }
 
-    .header .header-right {
+    .nav-links {
       display: flex;
+      gap: 32px;
       align-items: center;
     }
 
-    .header .header-right span.tagline {
-      font-family: 'Philosopher', sans-serif;
-      font-size: 18px;
+    .nav-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 14px;
       font-weight: 500;
+      transition: color 0.3s ease;
     }
 
-    .main-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
+    .nav-links a:hover {
+      color: var(--color-text-light);
     }
 
-    .slideshow-wrapper {
-      position: relative;
-      margin-bottom: 24px;
-    }
-
-    .slide-arrow {
-      background: #C1272D;
-      color: white;
+    .hamburger {
+      display: none;
+      background: none;
       border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      color: var(--color-text-light);
       cursor: pointer;
+    }
+
+    /* Mobile Navigation Menu Overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-bg);
+      z-index: 99;
+      padding: 100px 24px 24px;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu.active {
       display: flex;
+    }
+
+    .mobile-menu a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--color-text-light);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 120px 0 80px 0;
+    }
+
+    .est-badge {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--color-accent);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 40px;
+      max-width: 800px;
+      letter-spacing: -1px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--color-text-muted);
+      max-width: 720px;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: none;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      top: calc(50% - 6px);
-      transform: translateY(-50%);
-      z-index: 10;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      font-size: 18px;
-      transition: background 0.2s;
-    }
-
-    .slide-arrow:hover {
-      background: #a02025;
-    }
-
-    .prev-arrow {
-      left: -18px;
-    }
-
-    .next-arrow {
-      right: -18px;
-    }
-
-    @media (max-width: 600px) {
-      .slide-arrow {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-      }
-
-      .prev-arrow {
-        left: -8px;
-      }
-
-      .next-arrow {
-        right: -8px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header .logo {
-        font-size: 16px;
-      }
-
-      .header .header-right span.tagline {
-        font-size: 10px;
-      }
-
-      .header-content {
-        padding: 12px 15px;
-      }
-
-      .main-container {
-        padding: 15px;
-      }
-
-      .red-card {
-        padding: 16px;
-        border-radius: 10px;
-      }
-
-      .red-card h2 {
-        font-size: 18px;
-      }
-
-      .scroll-card {
-        height: 160px;
-      }
-    }
-
-    .horizontal-scroll {
-      overflow: hidden;
-      width: 100%;
-      padding: 4px 0 16px 0;
-    }
-
-    .slider-track {
-      display: flex;
-      gap: 16px;
-      will-change: transform;
-    }
-
-    .scroll-card {
-      position: relative;
-      flex-shrink: 0;
-      height: 180px;
-      border-radius: 16px;
-      overflow: hidden;
-      background-color: #222;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px 32px;
+      border: 1px solid var(--color-text-light);
+      background: none;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background-color 0.3s, color 0.3s;
       cursor: pointer;
     }
 
-    .scroll-card img {
+    .btn:hover {
+      background-color: var(--color-text-light);
+      color: var(--color-bg);
+    }
+
+    .btn-filled {
+      background-color: var(--color-text-light);
+      color: var(--color-bg);
+    }
+
+    .btn-filled:hover {
+      background-color: transparent;
+      color: var(--color-text-light);
+    }
+
+    /* Philosophy Section */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .philosophy-left h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .philosophy-left p {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+    }
+
+    .philosophy-right-card {
+      background-color: var(--color-card-dark);
+      padding: 40px;
+      border-radius: 8px;
+      border-left: 4px solid var(--color-accent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .philosophy-right-card p {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--color-text-light);
+    }
+
+    /* Experience Section (Ritual) */
+    .experience-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 64px;
+    }
+
+    .ritual-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      position: relative;
+    }
+
+    .ritual-item {
+      display: flex;
+      gap: 32px;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .ritual-item.right-align {
+      align-self: flex-end;
+    }
+
+    .ritual-item.left-align {
+      align-self: flex-start;
+    }
+
+    .ritual-num {
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--color-accent);
+      opacity: 0.6;
+      line-height: 1;
+    }
+
+    .ritual-content h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .ritual-content p {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Staggered Horizontal Lines */
+    @media (min-width: 768px) {
+      .ritual-item.right-align::before {
+        content: '';
+        position: absolute;
+        right: 100%;
+        top: 24px;
+        width: 140px;
+        height: 1px;
+        background-color: var(--color-border);
+      }
+    }
+
+    /* Values Section */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .value-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-border);
+      padding: 32px 24px;
+      border-radius: 8px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .value-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .value-icon {
+      color: var(--color-accent);
+    }
+
+    .value-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .value-card p {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Mid Quote Divider */
+    .quote-break {
+      text-align: center;
+      padding: 80px 0;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quote-break .quote-mark {
+      font-family: var(--font-serif);
+      font-size: 80px;
+      line-height: 1;
+      color: var(--color-accent);
+      opacity: 0.3;
+      margin-bottom: -20px;
+      display: block;
+    }
+
+    .quote-break h2 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .quote-break span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+    }
+
+    /* Visit Us Section */
+    .visit-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 60px;
+    }
+
+    .location-block {
+      margin-bottom: 80px;
+    }
+
+    .location-block:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .location-info {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .location-info h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--color-accent);
+      text-transform: uppercase;
+    }
+
+    .info-group p {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .location-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      border: 1px solid var(--color-border);
+      padding: 10px 18px;
+      border-radius: 4px;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .link-btn:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: var(--color-text-light);
+    }
+
+    .link-btn .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .location-map {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 340px;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-card);
+      position: relative;
+    }
+
+    .location-map img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0.8;
-      transition: transform 0.3s ease;
+      filter: grayscale(40%) contrast(110%);
+      transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
     }
 
-    .scroll-card:hover img {
-      transform: scale(1.05);
+    .location-map:hover img {
+      transform: scale(1.03);
+      opacity: 1;
+      filter: none;
     }
 
-    .scroll-card .card-content {
+    .location-map a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-overlay {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 16px 12px 12px;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
-      color: #fff;
-    }
-
-    .scroll-card h3 {
-      font-family: 'Philosopher', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-
-    .scroll-card .arrows {
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .content-cards {
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .red-card {
-      background-color: #C1272D;
-      color: #ffffff;
-      border-radius: 12px;
+      align-items: flex-end;
       padding: 24px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: var(--color-text-light);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .red-card h2 {
-      font-family: 'Philosopher', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      line-height: 1.3;
-    }
-
-    .red-card p {
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 16px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.95);
-    }
-
-    .red-card p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .red-card .actions {
-      display: flex;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .red-card .actions .material-symbols-outlined {
-      font-size: 24px;
-      cursor: pointer;
-      opacity: 0.9;
-      transition: opacity 0.2s;
-    }
-
-    .red-card .actions .material-symbols-outlined:hover {
+    .location-map:hover .map-overlay {
       opacity: 1;
     }
 
+    /* Footer Section */
     .footer {
-      background-color: #C1272D;
-      color: #ffffff;
-      margin-top: 20px;
+      background-color: var(--color-bg-dark);
+      padding: 80px 0 60px 0;
+      border-top: 1px solid var(--color-border);
     }
 
     .footer-content {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-items: center;
     }
 
     .footer .logo {
-      font-family: 'Righteous', cursive;
-      font-size: 22px;
+      font-size: 28px;
     }
 
-    @media (min-width: 600px) {
-      .scroll-card {
-        height: 200px;
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-nav a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .footer-nav a:hover {
+      color: var(--color-text-light);
+    }
+
+    .copyright {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 16px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .philosophy-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .location-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 60px 0;
       }
 
-      .scroll-card h3 {
-        font-size: 14px;
+      .hero-section {
+        padding: 80px 0 50px 0;
       }
 
-      .red-card h2 {
-        font-size: 22px;
+      .hero-title {
+        font-size: 38px;
+        margin-bottom: 24px;
       }
 
-      .red-card p {
-        font-size: 14px;
+      .hero-desc {
+        font-size: 15px;
+      }
+
+      .hero-buttons {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .ritual-item {
+        max-width: 100%;
+      }
+      
+      .ritual-item.right-align {
+        align-self: flex-start;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .location-map {
+        height: 280px;
+      }
+      
+      .philosophy-right-card {
+        padding: 28px;
+      }
+      
+      .philosophy-right-card p {
+        font-size: 18px;
       }
     }
   </style>
@@ -301,264 +664,269 @@
 
 <body>
 
+  <!-- Sticky Header -->
   <header class="header">
     <div class="header-content">
-      <div class="logo">PHILOSOFFEE</div>
-      <div class="header-right">
-        <span class="tagline">For the <b>love</b> of <b>Coffee</b></span>
-      </div>
+      <a href="#" class="logo">PHILOSOFFEE</a>
+      <nav class="nav-links">
+        <a href="#hero">Our Story</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#experience">Experience</a>
+        <a href="#visit">Visit Us</a>
+      </nav>
+      <button class="hamburger" aria-label="Toggle Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
     </div>
   </header>
 
-  <div class="main-container">
-    <div class="slideshow-wrapper">
-      <button class="slide-arrow prev-arrow" aria-label="Previous slide">&#10094;</button>
-      <div class="horizontal-scroll">
-        <div class="slider-track" id="card-track">
-          <div class="scroll-card"
-            onclick="document.getElementById('sec-philosophy').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-            <img src="./assets/images/img_hero_coffee.jpg" alt="Philosophy">
-            <div class="card-content">
-              <h3>Philosoffee's<br><b>Philosophy</b></h3>
-              <div class="arrows">>>></div>
-            </div>
-          </div>
-          <div class="scroll-card"
-            onclick="document.getElementById('sec-bengaluru').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-            <img src="./assets/images/img_blr_2.webp" alt="Bengaluru">
-            <div class="card-content">
-              <h3>Philosoffee's<br><b>Bengaluru</b></h3>
-              <div class="arrows">>>></div>
-            </div>
-          </div>
-          <div class="scroll-card"
-            onclick="document.getElementById('sec-irinjalakuda').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-            <img src="./assets/images/img_ker_3.webp" alt="Irinjalakuda">
-            <div class="card-content">
-              <h3>Philosoffee's<br><b>Irinjalakuda</b></h3>
-              <div class="arrows">>>></div>
-            </div>
-          </div>
-          <div class="scroll-card"
-            onclick="document.getElementById('sec-workshop').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-            <img src="./assets/images/img_hero_coffee_machine.jpg" alt="Consult / Franchise">
-            <div class="card-content">
-              <h3><b>Consult /<br>Franchise</b></h3>
-              <div class="arrows">>>></div>
-            </div>
-          </div>
-          <div class="scroll-card"
-            onclick="document.getElementById('sec-workshop').scrollIntoView({ behavior: 'smooth', block: 'center' })">
-            <img src="./assets/images/img_artisan_coffee_setup.png" alt="Book a Workshop">
-            <div class="card-content">
-              <h3><b>Book a<br>Workshop</b></h3>
-              <div class="arrows">>>></div>
-            </div>
+  <!-- Mobile Overlay Menu -->
+  <div class="mobile-menu">
+    <a href="#hero">Our Story</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#experience">Experience</a>
+    <a href="#visit">Visit Us</a>
+  </div>
+
+  <div class="container">
+    
+    <!-- Hero / Intro Section -->
+    <section class="hero-section" id="hero">
+      <span class="est-badge">EST. 2024</span>
+      <h1 class="hero-title">Coffee worth slowing down for.</h1>
+      <p class="hero-desc">A place that brings people together. Every cup is brewed with care and served with intention, making space for conversations, ideas, and the people who enjoy them.</p>
+      <p class="hero-desc">The coffee is made from 100% Arabica beans sourced from select high-altitude plantations in Coorg, grown above 3,000 feet. These elevations enhance the beans’ character, producing balanced acidity, rich aroma, and nuanced flavors. At Philosoffee, every cup reflects our passion for authentic, thoughtfully prepared coffee.</p>
+      <p class="hero-desc">We serve carefully crafted coffee using both manual brewing methods and espresso techniques, following international standards to ensure precision and consistency in every cup.</p>
+      <div class="hero-buttons">
+        <a href="#visit" class="btn btn-filled">Visit Our Café</a>
+        <a href="#philosophy" class="btn">Our Story</a>
+      </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="section" id="philosophy">
+      <span class="section-label">Philosophy</span>
+      <div class="philosophy-grid">
+        <div class="philosophy-left">
+          <h2>For the Love of Coffee</h2>
+          <p>Inspired by the Japanese concept of "Ma"—the pure space between things—and Scandinavian functionalism, our philosophy is rooted in essentialism. We remove the noise to highlight the inherent beauty of the bean.</p>
+        </div>
+        <div class="philosophy-right">
+          <div class="philosophy-right-card">
+            <p>"In the rush of modern life, we found that the most profound connections are made in moments of stillness."</p>
           </div>
         </div>
       </div>
-      <button class="slide-arrow next-arrow" aria-label="Next slide">&#10095;</button>
+    </section>
+
+    <!-- Experience / Ritual Section -->
+    <section class="section" id="experience">
+      <span class="section-label">The Experience</span>
+      <h2 class="experience-title">A Five-Step Ritual</h2>
+      
+      <div class="ritual-list">
+        <!-- Step 1 -->
+        <div class="ritual-item left-align">
+          <span class="ritual-num">01</span>
+          <div class="ritual-content">
+            <h3>The Selection</h3>
+            <p>Single-origin beans curated from sustainable micro-lots across the globe.</p>
+          </div>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="ritual-item right-align">
+          <span class="ritual-num">02</span>
+          <div class="ritual-content">
+            <h3>The Roast</h3>
+            <p>Light-to-medium profiles that respect the terroir and natural acidity.</p>
+          </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="ritual-item left-align">
+          <span class="ritual-num">03</span>
+          <div class="ritual-content">
+            <h3>The Bloom</h3>
+            <p>Precision-poured water releases CO2, awakening the complex aromatics.</p>
+          </div>
+        </div>
+        
+        <!-- Step 4 -->
+        <div class="ritual-item right-align">
+          <span class="ritual-num">04</span>
+          <div class="ritual-content">
+            <h3>The Pour</h3>
+            <p>A slow, rhythmic spiral pour for optimal extraction and clarity.</p>
+          </div>
+        </div>
+        
+        <!-- Step 5 -->
+        <div class="ritual-item left-align">
+          <span class="ritual-num">05</span>
+          <div class="ritual-content">
+            <h3>The Sip</h3>
+            <p>Served in handmade ceramic vessels to preserve temperature and texture.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Grid Section -->
+    <section class="section" id="values">
+      <div class="values-grid">
+        <!-- Value 1 -->
+        <div class="value-card">
+          <span class="material-symbols-outlined value-icon">local_florist</span>
+          <h3>Ethical Sourcing</h3>
+          <p>Direct relationships with farmers, ensuring fair wages and future-proof harvests.</p>
+        </div>
+        <!-- Value 2 -->
+        <div class="value-card">
+          <span class="material-symbols-outlined value-icon">science</span>
+          <h3>Artisanal Precision</h3>
+          <p>Every variable—from water PH to grind size—is meticulously measured.</p>
+        </div>
+        <!-- Value 3 -->
+        <div class="value-card">
+          <span class="material-symbols-outlined value-icon">recycling</span>
+          <h3>Minimal Footprint</h3>
+          <p>Plastic-free packaging and zero-waste initiatives in our brewing labs.</p>
+        </div>
+        <!-- Value 4 -->
+        <div class="value-card">
+          <span class="material-symbols-outlined value-icon">menu_book</span>
+          <h3>Shared Knowledge</h3>
+          <p>Workshops and journals dedicated to the education of the connoisseur.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mid Quote Break -->
+    <div class="quote-break">
+      <span class="quote-mark">“</span>
+      <h2>Coffee is an art of patience. Every cup is a masterpiece, crafted to awaken the senses.</h2>
+      <span>— HOUSE PHILOSOPHY</span>
     </div>
 
-
-    <main class="content-cards">
-      <article class="red-card" id="sec-philosophy">
-        <h2>For the <b>Love</b> of <b>Coffee</b></h2>
-        <p>At Philosoffee, we don't just brew coffee: we honour the journey from the soil to the soul. Our beans are
-          born in the high-altitude mists of Coorg, grown at 3,000 ft where the elevation shapes a denser, more complex
-          flavour profile.</p>
-        <p>Dedicated to the craft of the bean, we select only 100% Arabica, using a natural process to preserve the
-          inherent sweetness and fruit-forward character of the cherry. Each harvest is small-batch roasted with
-          precision, ensuring that the single-origin story of the Western Ghats is told in every pour. Whether you're
-          seeking a moment of stillness or the perfect rhythm for your day, it all starts here - with a cup built on
-          passion and precision.</p>
-        <p><a href="https://maps.app.goo.gl/RXWQPLFDWgCfy6w38" target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; white-space: nowrap;">Thrissur<img
-              src="./assets/images/ic_location.png" alt="Locate Thrissur"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a><a
-            href="https://www.instagram.com/philosoffee.ijk?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-            target="_blank" style="color: inherit; text-decoration: none; vertical-align: middle;"><img
-              src="./assets/images/ic_instagram_colorful.png" alt="Instagram"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a> | <a
-            href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 8px;">Bengaluru<img
-              src="./assets/images/ic_location.png" alt="Locate Bengaluru"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a><a
-            href="https://www.instagram.com/philosoffee.blr?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-            target="_blank" style="color: inherit; text-decoration: none; vertical-align: middle;"><img
-              src="./assets/images/ic_instagram_colorful.png" alt="Instagram"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a></p>
-      </article>
-
-      <article class="red-card" id="sec-irinjalakuda">
-        <h2>Founder of <b>Speciality Coffee</b> &<br><b>Open Club Coffee Culture</b> in Irinjalakuda</h2>
-        <p>Philosoffee in Irinjalakuda is the town's pioneer of specialty coffee, introducing a new standard of brewing
-          to the local community. Designed as an open club with a sophisticated bistro setup, our space is a dedicated
-          sanctuary for the craft of the bean.</p>
-        <p>Our coffee-centric menu is built on a foundation of 100% Arabica beans, sourced from the high-altitude
-          estates of Coorg. We celebrate the versatility of coffee through a range of brewing methods, from the ritual
-          of Pour Over and Aeropress to the patience of our signature Cold Brew and precision-pulled Espresso-based
-          classics.</p>
-        <p>Steeped in an atmosphere of rock music and a curated library, Philosoffee offers an ambient escape where
-          culture and caffeine collide. Whether you're here to discover a new roast or lose yourself in a book, we
-          invite you to join the revolution.</p>
-        <p>Visit: Philosoffee.ijk <a href="https://maps.app.goo.gl/yJaXsXGwY2EQrbfZA" target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 4px; white-space: nowrap;">
-            <img src="./assets/images/ic_location.png" alt="Locate Cafe Philosoffee"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;">
-          </a><a
-            href="https://www.instagram.com/philosoffee.ijk?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-            target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 4px;"><img
-              src="./assets/images/ic_instagram_colorful.png" alt="Instagram"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a> <a
-            href="https://wa.me/919037735128?text=Name%3A%20%0AMobile%3A%20%0ADate%20%26%20Time%3A%20%0ANo%20of%20Persons%3A%20"
-            target="_blank" style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 8px;"
-            title="Request a Reservation">
-            <span class="material-symbols-outlined"
-              style="font-size: 24px; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;">chat_bubble</span>
-          </a><br>Amenities:
-          Bistro | library | free-wifi | plug points | washroom | music</p>
-      </article>
-
-      <article class="red-card" id="sec-bengaluru">
-        <h2>An original <b>Counter Cafe</b> in Bengaluru</h2>
-        <p>In the heart of the city, Philosoffee Bengaluru reimagines the coffee experience through our original counter
-          café concept. Moving away from the rushed 'grab-and-go' culture, we've designed a compact, intimate space that
-          invites you to slow down.</p>
-        <p>This is a small café concept where the barrier between guest and craft is removed. With a layout centered
-          around an order counter and cozy seating, it's a space built for connection - making it easy to communicate
-          with your barista about the nuances of our 100% Arabica beans and the story behind each brew.</p>
-        <p>There is no rush here. We invite you to sit, sip, and enjoy a time of stillness. Whether you are exploring
-          our manual brews or a classic espresso, every cup is an invitation to pause and appreciate the art of
-          specialty coffee.</p>
-        <p>Visit: Philosoffee.blr <a href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 4px; white-space: nowrap;">
-            <img src="./assets/images/ic_location.png" alt="Locate Philosoffee"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;">
-          </a><a
-            href="https://www.instagram.com/philosoffee.blr?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-            target="_blank"
-            style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 4px; white-space: nowrap;"><img
-              src="./assets/images/ic_instagram_colorful.png" alt="Instagram"
-              style="width: 28px; height: 28px; object-fit: contain; vertical-align: middle;"></a> <a
-            href="https://wa.me/919048374981?text=Name%3A%20%0AMobile%3A%20%0ADate%20%26%20Time%3A%20%0ANo%20of%20Persons%3A%20"
-            target="_blank" style="color: inherit; text-decoration: none; vertical-align: middle; margin-left: 8px;"
-            title="Request a Reservation">
-            <span class="material-symbols-outlined"
-              style="font-size: 24px; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;">chat_bubble</span>
-          </a><br>Amenities:
-          Counter cafe | mini library | free-wifi | plug points | washroom | music</p>
-      </article>
-
-      <article class="red-card" id="sec-workshop">
-        <h2>Schedule a <b>Coffee Experience Workshop</b> / <br>Coffee Consulting</h2>
-        <p>Beyond our cafes, we offer comprehensive coffee consulting services for those who dream of starting their own
-          cafe, building a unique coffee brand, or opening a Philosoffee branch. From selecting high-quality beans to
-          establishing rigorous brewing standards and shaping your overall cafe concept, we provide guidance every step
-          of the way.</p>
-        <p>Our team is led by Manu Mohan, the founder of Philosoffee and a professional barista with deep expertise in
-          brewing and bar management. With a strong focus on quality and consistency, we help you build a coffee space
-          rooted in specialty standards.</p>
-        <p>At the heart of everything we do is our motto, "Way More Coffee". We believe in sharing the true taste of
-          unadulterated, single-origin 100% Arabica - simple, honest, and crafted with care.</p>
-        <div class="actions">
-          <a href="tel:+919037735128" style="color: inherit; text-decoration: none;">
-            <span class="material-symbols-outlined">call</span>
-          </a>
-          <a href="https://wa.me/919037735128?text=Name%3A%20%0AMobile%3A%20%0ADate%20%26%20Time%3A%20%0ANo%20of%20Persons%3A%20"
-            target="_blank" style="color: inherit; text-decoration: none;">
-            <span class="material-symbols-outlined">chat_bubble</span>
-          </a>
+    <!-- Visit Us Section -->
+    <section class="section" id="visit">
+      <span class="section-label">Visit Us</span>
+      <h2 class="visit-title">Our Cafés</h2>
+      
+      <!-- Irinjalakuda Location -->
+      <div class="location-block">
+        <div class="location-grid">
+          <div class="location-info">
+            <h2>Irinjalakuda</h2>
+            <div class="info-group">
+              <span class="info-label">Location</span>
+              <p>Padayattil Arcade, PNS Road<br>Chungam, Irinjalakuda, Kerala 680121</p>
+            </div>
+            <div class="info-group">
+              <span class="info-label">Hours</span>
+              <p>Mon — Fri: 07:00 — 17:00<br>Sat — Sun: 08:00 — 18:00</p>
+            </div>
+            <div class="location-links">
+              <a href="https://maps.app.goo.gl/yJaXsXGwY2EQrbfZA" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">location_on</span> Google Maps
+              </a>
+              <a href="https://www.instagram.com/philosoffee.ijk?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">camera_alt</span> Instagram
+              </a>
+              <a href="https://wa.me/919037735128?text=Name%3A%20%0AMobile%3A%20%0ADate%20%26%20Time%3A%20%0ANo%20of%20Persons%3A%20" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">chat_bubble</span> Reserve Table
+              </a>
+            </div>
+          </div>
+          <div class="location-map">
+            <a href="https://maps.app.goo.gl/yJaXsXGwY2EQrbfZA" target="_blank">
+              <img src="./assets/images/philosoffee_kerala_map.png" alt="Philosoffee Irinjalakuda Map">
+              <div class="map-overlay">Open Google Maps</div>
+            </a>
+          </div>
         </div>
-      </article>
-    </main>
+      </div>
+
+      <!-- Bengaluru Location -->
+      <div class="location-block">
+        <div class="location-grid">
+          <div class="location-info">
+            <h2>Bengaluru</h2>
+            <div class="info-group">
+              <span class="info-label">Location</span>
+              <p>JP Nagar, South Bengaluru<br>Bengaluru, Karnataka 560078</p>
+            </div>
+            <div class="info-group">
+              <span class="info-label">Hours</span>
+              <p>Mon — Fri: 07:00 — 17:00<br>Sat — Sun: 08:00 — 18:00</p>
+            </div>
+            <div class="location-links">
+              <a href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">location_on</span> Google Maps
+              </a>
+              <a href="https://www.instagram.com/philosoffee.blr?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">camera_alt</span> Instagram
+              </a>
+              <a href="https://wa.me/919048374981?text=Name%3A%20%0AMobile%3A%20%0ADate%20%26%20Time%3A%20%0ANo%20of%20Persons%3A%20" target="_blank" class="link-btn">
+                <span class="material-symbols-outlined">chat_bubble</span> Reserve Table
+              </a>
+            </div>
+          </div>
+          <div class="location-map">
+            <a href="https://maps.app.goo.gl/7F4UKCPzaXCaa5bw5" target="_blank">
+              <img src="./assets/images/philosoffee_bengaluru_map.png" alt="Philosoffee Bengaluru Map">
+              <div class="map-overlay">Open Google Maps</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
   </div>
 
+  <!-- Footer Section -->
   <footer class="footer">
     <div class="footer-content">
-      <div class="logo">PHILOSOFFEE</div>
+      <a href="#" class="logo">PHILOSOFFEE</a>
+      <nav class="footer-nav">
+        <a href="#hero">Our Story</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#experience">Experience</a>
+        <a href="#visit">Visit Us</a>
+      </nav>
+      <div class="copyright">
+        &copy; 2026 Philosoffee. All rights reserved. Crafted with intentionality.
+      </div>
     </div>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const track = document.getElementById('card-track');
-      const container = document.querySelector('.horizontal-scroll');
-      const prevBtn = document.querySelector('.prev-arrow');
-      const nextBtn = document.querySelector('.next-arrow');
-      const wrapper = document.querySelector('.slideshow-wrapper');
+      const hamburger = document.querySelector('.hamburger');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-menu a');
 
-      if (track && container && prevBtn && nextBtn) {
-        const updateWidths = () => {
-          const gap = 16;
-          const visibleCards = window.innerWidth >= 600 ? 4 : 2;
-          const containerWidth = container.clientWidth;
-          const cardWidth = (containerWidth - (gap * (visibleCards - 1))) / visibleCards;
-          track.querySelectorAll('.scroll-card').forEach(c => c.style.width = `${cardWidth}px`);
-        };
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+          mobileMenu.classList.toggle('active');
+          if (mobileMenu.classList.contains('active')) {
+            hamburger.innerHTML = '<span class="material-symbols-outlined">close</span>';
+            document.body.style.overflow = 'hidden'; // prevent scrolling when menu is open
+          } else {
+            hamburger.innerHTML = '<span class="material-symbols-outlined">menu</span>';
+            document.body.style.overflow = '';
+          }
+        });
 
-        updateWidths();
-        window.addEventListener('resize', updateWidths);
-
-        let isAnimating = false;
-
-        const getCardWidth = () => {
-          const card = track.querySelector('.scroll-card');
-          return card.offsetWidth + 16; // width + gap
-        };
-
-        const slideNext = () => {
-          if (isAnimating) return;
-          isAnimating = true;
-          const amount = getCardWidth();
-          track.style.transition = 'transform 0.4s ease-in-out';
-          track.style.transform = `translateX(-${amount}px)`;
-
-          track.addEventListener('transitionend', function onEnd() {
-            track.removeEventListener('transitionend', onEnd);
-            track.style.transition = 'none';
-            track.style.transform = 'translateX(0)';
-            track.appendChild(track.firstElementChild);
-            isAnimating = false;
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            hamburger.innerHTML = '<span class="material-symbols-outlined">menu</span>';
+            document.body.style.overflow = '';
           });
-        };
-
-        const slidePrev = () => {
-          if (isAnimating) return;
-          isAnimating = true;
-          const amount = getCardWidth();
-
-          track.insertBefore(track.lastElementChild, track.firstElementChild);
-          track.style.transition = 'none';
-          track.style.transform = `translateX(-${amount}px)`;
-
-          void track.offsetWidth; // force reflow
-
-          track.style.transition = 'transform 0.4s ease-in-out';
-          track.style.transform = 'translateX(0)';
-
-          track.addEventListener('transitionend', function onEnd() {
-            track.removeEventListener('transitionend', onEnd);
-            isAnimating = false;
-          });
-        };
-
-        nextBtn.addEventListener('click', slideNext);
-        prevBtn.addEventListener('click', slidePrev);
-
-        let autoplayInterval;
-        const startAutoplay = () => {
-          autoplayInterval = setInterval(slideNext, 5000);
-        };
-
-        startAutoplay();
-
-        // Pause on hover or touch
-        wrapper.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
-        wrapper.addEventListener('mouseleave', startAutoplay);
-        wrapper.addEventListener('touchstart', () => clearInterval(autoplayInterval));
-        wrapper.addEventListener('touchend', startAutoplay);
+        });
       }
     });
   </script>
