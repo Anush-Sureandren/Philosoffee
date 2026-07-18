@@ -186,6 +186,8 @@
     /* Hero Wrapper for Full Height Landing */
     .hero-wrapper {
       min-height: calc(100vh - 73px);
+      min-height: calc(100svh - 73px);
+      min-height: calc(100dvh - 73px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -476,6 +478,8 @@
       text-align: center;
       width: 100%;
       min-height: calc(100vh - 73px);
+      min-height: calc(100svh - 73px);
+      min-height: calc(100dvh - 73px);
       padding: clamp(15px, 3vh, 30px) 0 clamp(5px, 1vh, 10px) 0;
       box-sizing: border-box;
       display: flex;
@@ -617,7 +621,23 @@
       }
 
       .section-divider {
-        margin: 60px 0;
+        margin: 15px 0 0 0;
+      }
+
+      .scroll-down-svg {
+        width: 45px;
+      }
+
+      .hero-wrapper {
+        padding: 15px 0 10px 0;
+      }
+
+      .hero-text {
+        margin-bottom: 15px;
+      }
+
+      .section {
+        padding: 15px 0 10px 0;
       }
     }
   </style>
