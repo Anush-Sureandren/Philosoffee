@@ -579,6 +579,10 @@
       margin-top: 20px;
     }
 
+    .consulting-btn-container {
+      margin-top: 40px;
+    }
+
     /* Footer Dot */
     .dot-divider {
       color: var(--color-divider);
@@ -592,52 +596,107 @@
     /* Mobile adaptations */
 
     @media (max-width: 600px) {
+      html {
+        scroll-padding-top: 50px;
+      }
+
+      .nav-container {
+        padding: 10px 16px;
+      }
+
+      .menu-toggle {
+        right: 16px;
+      }
+
+      .nav-dropdown {
+        right: 16px;
+      }
+
       .hero-top {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
 
       .logo-left {
-        font-size: 4.5rem;
+        font-size: 3.2rem;
       }
 
       .logo-right {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
       }
 
       .nav-pills {
-        gap: 10px;
+        gap: 8px;
       }
 
       .btn-pill {
-        padding: 8px 22px;
-        font-size: 13px;
+        padding: 6px 18px;
+        font-size: 12px;
       }
 
       .locations-grid {
-        gap: 40px;
+        gap: 20px;
+      }
+
+      .location-card {
+        min-width: unset;
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .location-name {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .btn-small-pill {
+        padding: 6px 16px;
+        font-size: 11px;
       }
 
       .section-divider {
-        margin: 15px 0 0 0;
+        margin: 10px 0 0 0;
       }
 
       .scroll-down-svg {
-        width: 45px;
+        width: 36px;
       }
 
       .hero-wrapper {
-        padding: 15px 0 10px 0;
+        min-height: calc(100vh - 50px);
+        min-height: calc(100svh - 50px);
+        min-height: calc(100dvh - 50px);
+        padding: 10px 0 5px 0;
       }
 
       .hero-text {
-        margin-bottom: 15px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 10px;
       }
 
       .section {
-        padding: 15px 0 10px 0;
+        min-height: calc(100vh - 50px);
+        min-height: calc(100svh - 50px);
+        min-height: calc(100dvh - 50px);
+        padding: 10px 0 5px 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+
+      .section-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 8px;
+      }
+
+      .consulting-btn-container {
+        margin-top: 15px;
       }
     }
   </style>
@@ -891,7 +950,7 @@
           specialty cafés that serve exceptional coffee without unnecessary complexity.
         </p>
 
-        <div style="margin-top: 40px;">
+        <div class="consulting-btn-container">
           <a href="https://wa.me/919048374981?text=Hi%2C%20I%20would%20like%20to%20book%20a%20consulting%20appointment%20with%20Philosoffee."
             target="_blank" class="btn-pill btn-consulting">
             <span class="material-symbols-outlined" style="margin-right: 8px;">edit_note</span>Book an Appointment
@@ -941,7 +1000,7 @@
         // Find the section closest to the top of the viewport
         let currentIndex = 0;
         let minDiff = Infinity;
-        const scrollPadding = 80;
+        const scrollPadding = window.innerWidth <= 600 ? 50 : 80;
 
         sections.forEach((sec, index) => {
           const rect = sec.getBoundingClientRect();
