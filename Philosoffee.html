@@ -43,9 +43,9 @@
       font-family: var(--font-sans);
       background-color: var(--color-bg);
       color: var(--color-text-primary);
-      line-height: 1.8;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
-      padding: 0 0 60px 0;
+      padding: 0;
     }
 
     /* Sticky Top Navigation Bar */
@@ -186,6 +186,8 @@
     /* Hero Wrapper for Full Height Landing */
     .hero-wrapper {
       min-height: calc(100vh - 73px);
+      min-height: calc(100svh - 73px);
+      min-height: calc(100dvh - 73px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -307,6 +309,7 @@
       letter-spacing: 2px;
       transition: transform 0.3s ease;
       width: 100%;
+      flex-shrink: 0;
     }
 
     .section-divider:hover {
@@ -325,6 +328,7 @@
     .scroll-down-arrow {
       display: inline-block;
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
     .scroll-down-arrow:hover {
@@ -476,6 +480,8 @@
       text-align: center;
       width: 100%;
       min-height: calc(100vh - 73px);
+      min-height: calc(100svh - 73px);
+      min-height: calc(100dvh - 73px);
       padding: clamp(15px, 3vh, 30px) 0 clamp(5px, 1vh, 10px) 0;
       box-sizing: border-box;
       display: flex;
@@ -575,6 +581,10 @@
       margin-top: 20px;
     }
 
+    .consulting-btn-container {
+      margin-top: 40px;
+    }
+
     /* Footer Dot */
     .dot-divider {
       color: var(--color-divider);
@@ -585,40 +595,292 @@
       user-select: none;
     }
 
-    /* Mobile adaptations */
+    /* Mobile & Short-Viewport Responsive Adaptations */
 
     @media (max-width: 600px) {
+      html {
+        scroll-padding-top: 50px;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .nav-container {
+        padding: 10px 16px;
+      }
+
+      .menu-toggle {
+        right: 16px;
+      }
+
+      .nav-dropdown {
+        right: 16px;
+      }
+
       .hero-top {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: clamp(4px, 1.2vh, 10px);
+        gap: 4px;
       }
 
       .logo-left {
-        font-size: 4.5rem;
+        font-size: clamp(2.4rem, 8vw, 2.9rem);
+        line-height: 0.95;
       }
 
       .logo-right {
-        font-size: 2.2rem;
+        font-size: clamp(1.3rem, 4.5vw, 1.6rem);
       }
 
       .nav-pills {
-        gap: 10px;
+        gap: 6px;
+        margin-bottom: 2px;
       }
 
       .btn-pill {
-        padding: 8px 22px;
-        font-size: 13px;
+        padding: 6px 14px;
+        font-size: 11px;
       }
 
       .locations-grid {
-        gap: 40px;
+        gap: 10px;
+        margin-top: clamp(8px, 1.5vh, 16px);
+      }
+
+      .location-card {
+        min-width: unset;
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .location-name {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      .btn-small-pill {
+        padding: 5px 14px;
+        font-size: 11px;
       }
 
       .section-divider {
-        margin: 60px 0;
+        margin: 4px 0 0 0;
+        flex-shrink: 0;
       }
+
+      .scroll-down-arrow {
+        flex-shrink: 0;
+      }
+
+      .scroll-down-svg {
+        width: clamp(30px, 7vw, 36px);
+      }
+
+      .hero-wrapper {
+        min-height: calc(100vh - 50px);
+        min-height: calc(100svh - 50px);
+        min-height: calc(100dvh - 50px);
+        max-height: calc(100dvh - 50px);
+        padding: clamp(6px, 1.5vh, 14px) 0 clamp(4px, 1vh, 8px) 0;
+      }
+
+      .hero-text {
+        font-size: clamp(0.85rem, 3.5vw, 0.92rem);
+        line-height: 1.45;
+        margin-bottom: clamp(6px, 1.5vh, 10px);
+      }
+
+      .section {
+        min-height: calc(100vh - 50px);
+        min-height: calc(100svh - 50px);
+        min-height: calc(100dvh - 50px);
+        max-height: calc(100dvh - 50px);
+        padding: clamp(6px, 1.5vh, 14px) 0 clamp(4px, 1vh, 8px) 0;
+      }
+
+      .section-title {
+        font-size: clamp(1.8rem, 6vw, 2.1rem);
+        margin-bottom: clamp(4px, 1vh, 8px);
+      }
+
+      .section-text {
+        font-size: clamp(0.82rem, 3.4vw, 0.9rem);
+        line-height: 1.42;
+        margin-bottom: clamp(4px, 1vh, 6px);
+      }
+
+      .consulting-btn-container {
+        margin-top: clamp(8px, 1.5vh, 14px);
+      }
+    }
+
+    /* Extra support for devices with compact vertical height */
+    @media (max-height: 720px) {
+      .hero-top {
+        gap: 2px;
+        margin-bottom: 4px;
+      }
+
+      .logo-left {
+        font-size: 2.2rem;
+      }
+
+      .logo-right {
+        font-size: 1.3rem;
+      }
+
+      .hero-text {
+        font-size: 0.82rem;
+        line-height: 1.35;
+        margin-bottom: 6px;
+      }
+
+      .btn-pill {
+        padding: 5px 12px;
+        font-size: 10px;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 3px;
+      }
+
+      .section-text {
+        font-size: 0.8rem;
+        line-height: 1.35;
+        margin-bottom: 3px;
+      }
+
+      .locations-grid {
+        gap: 6px;
+        margin-top: 6px;
+      }
+
+      .location-name {
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .btn-small-pill {
+        padding: 4px 10px;
+        font-size: 10px;
+      }
+
+      .scroll-down-svg {
+        width: 28px;
+      }
+
+      .hero-wrapper,
+      .section {
+        padding: 4px 0 2px 0;
+      }
+    }
+
+    /* WhatsApp Name Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #888;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--color-accent);
+    }
+
+    .modal-icon {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    .modal-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .modal-subtitle {
+      font-size: 13.5px;
+      color: var(--color-text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #E0E0E0;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--color-text-primary);
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .modal-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(255, 90, 36, 0.15);
+    }
+
+    .modal-submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 10px 20px;
+      font-size: 13.5px;
     }
   </style>
 </head>
@@ -871,8 +1133,8 @@
           specialty cafés that serve exceptional coffee without unnecessary complexity.
         </p>
 
-        <div style="margin-top: 40px;">
-          <a href="https://wa.me/919048374981?text=Hi%2C%20I%20would%20like%20to%20book%20a%20consulting%20appointment%20with%20Philosoffee."
+        <div class="consulting-btn-container">
+          <a href="https://wa.me/919037735128?text=Hey%2C%20I%20would%20like%20to%20know%20more%20about%20coffee."
             target="_blank" class="btn-pill btn-consulting">
             <span class="material-symbols-outlined" style="margin-right: 8px;">edit_note</span>Book an Appointment
           </a>
@@ -883,6 +1145,24 @@
       <div class="dot-divider">●</div>
     </section>
 
+  </div>
+
+  <!-- Name Input Modal for WhatsApp -->
+  <div id="name-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
+      <div class="modal-icon">☕</div>
+      <h3 class="modal-title">Book an Appointment</h3>
+      <p class="modal-subtitle">What's your name? (Optional)</p>
+      <form id="whatsapp-form">
+        <input type="text" id="user-name-input" class="modal-input" placeholder="e.g. Alex" maxlength="40" autocomplete="given-name">
+        <div class="modal-buttons">
+          <button type="submit" class="btn-pill modal-submit-btn">
+            Continue to WhatsApp <span class="material-symbols-outlined" style="font-size: 16px; margin-left: 4px;">arrow_forward</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -908,6 +1188,45 @@
         });
       }
 
+      // WhatsApp Name Prompt Modal
+      const bookBtn = document.querySelector('.btn-consulting');
+      const nameModal = document.getElementById('name-modal');
+      const closeModalBtn = document.getElementById('modal-close-btn');
+      const whatsappForm = document.getElementById('whatsapp-form');
+      const userNameInput = document.getElementById('user-name-input');
+
+      if (bookBtn && nameModal) {
+        bookBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          nameModal.classList.add('active');
+          nameModal.setAttribute('aria-hidden', 'false');
+          setTimeout(() => userNameInput.focus(), 150);
+        });
+
+        const closeModal = () => {
+          nameModal.classList.remove('active');
+          nameModal.setAttribute('aria-hidden', 'true');
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+        nameModal.addEventListener('click', (e) => {
+          if (e.target === nameModal) closeModal();
+        });
+
+        whatsappForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = userNameInput.value.trim();
+          let message = "Hey! I would like to know more about coffee.";
+          if (name) {
+            message = `Hey, I'm ${name}! I would like to know more about coffee.`;
+          }
+          const encodedMessage = encodeURIComponent(message);
+          const whatsappUrl = `https://wa.me/919037735128?text=${encodedMessage}`;
+          window.open(whatsappUrl, '_blank');
+          closeModal();
+        });
+      }
+
       // Full-page scroll controller
       const sections = document.querySelectorAll('.hero-wrapper, .section');
       let isScrolling = false;
@@ -921,7 +1240,7 @@
         // Find the section closest to the top of the viewport
         let currentIndex = 0;
         let minDiff = Infinity;
-        const scrollPadding = 80;
+        const scrollPadding = window.innerWidth <= 600 ? 50 : 80;
 
         sections.forEach((sec, index) => {
           const rect = sec.getBoundingClientRect();
